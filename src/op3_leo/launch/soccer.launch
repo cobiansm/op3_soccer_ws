@@ -1,0 +1,34 @@
+<?xml version="1.0" ?>
+<launch>    
+    
+  <param name="offset_file_path"         value="$(find op3_manager)/config/offset.yaml"/>
+  <param name="robot_file_path"          value="$(find op3_manager)/config/OP3.robot"/>
+  <param name="init_file_path"           value="$(find op3_manager)/config/dxl_init_OP3.yaml"/>
+  <param name="device_name"              value="/dev/ttyUSB0"/>
+	
+  <param name="/robotis/direct_control/default_moving_time"     value="0.04"/>
+  <param name="/robotis/direct_control/default_moving_angle"    value="90"/>
+    
+  <!-- OP3 Manager -->
+  <node pkg="op3_manager" type="op3_manager" name="op3_manager" output="screen">
+    <param name="angle_unit" value="30" />
+  </node>
+
+  <!-- OP3 Localization -->
+  <node pkg="op3_localization" type="op3_localization" name="op3_localization" output="screen"/>
+	
+  <!-- OP3 Read-Write demo-->
+  <node pkg="op3_leo" type="read_write" name="op3_read_write" output="screen">
+    <param name="gazebo_sim" value="false"    type="bool" />
+  </node>
+
+  <!-- OP3 BallFollower node
+  <node name="ball_follower_node" pkg="op3_leo" type="op3_leo" output="screen" />  -->
+
+  <!-- OP3 Camera node 
+  <node name="usb_cam_node" pkg="usb_cam" type="usb_cam" output="screen" />-->
+
+  <!-- OP3 Vision node 
+  <node name="image" pkg="op3_leo" type="image" output="screen" />-->
+
+</launch>

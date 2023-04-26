@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>op3_leo</name>
+  <version>1.2.1</version>
+  <description>
+    The op3_leo package
+  </description>
+  
+  <license>BSD</license>
+  <author email="a01633478@tec.mx">Marlene Cobian</author>
+  <maintainer email="a01638085@tec.mx">Pedro Deniz</maintainer>
+  <buildtool_depend>catkin</buildtool_depend>
+  <depend>roscpp</depend>
+  <depend>std_msgs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>rospy</depend>
+  <depend>robotis_controller_msgs</depend>
+  <depend>cv_bridge</depend>
+  <depend>image_transport</depend>
+  <depend>geometry_msgs</depend>
+  <depend>eigen</depend>
+  <depend>robotis_math</depend>
+  <depend>op3_action_module_msgs</depend>
+  
+  <exec_depend>op3_manager</exec_depend>
+
+</package>

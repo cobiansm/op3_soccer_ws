@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<launch>    	
+  <!-- OP3 Read-Write demo -->
+  <node pkg="op3_leo" type="read_write" name="op3_read_write" output="screen">
+    <param name="gazebo_sim" value="true"    type="bool" />
+  </node>
+</launch>

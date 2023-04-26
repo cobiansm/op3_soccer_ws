@@ -1,0 +1,8 @@
+prefix=/home/robotis/nobios/install
+
+Name: op3_leo
+Description: Description of op3_leo
+Version: 1.2.1
+Cflags: -I/home/robotis/nobios/install/include
+Libs: -L/home/robotis/nobios/install/lib 
+Requires: roscpp robotis_controller_msgs sensor_msgs std_msgs rospy cv_bridge image_transport geometry_msgs op3_action_module_msgs robotis_math
