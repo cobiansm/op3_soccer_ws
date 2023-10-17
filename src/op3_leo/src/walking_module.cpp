@@ -26,7 +26,7 @@ void readyToDemo();
 void setModule(const std::string& module_name);
 void goInitPose();
 void goAction(int page);
-void goWalk(string command);
+void goWalk(std::string& command);
 bool isActionRunning();
 bool getWalkingParam();
 
@@ -48,8 +48,6 @@ const double FALL_BACK_LIMIT = -55;
 double present_pitch_;
 int page;
 int state;
-
-string command;
 
 const int row = 5700;
 int col = 14;
@@ -95,13 +93,15 @@ int main(int argc, char **argv)
   ros::init(argc, argv, "read_write");
   ros::NodeHandle nh(ros::this_node::getName());
 
-  ros::Subscriber error_sub = nh.subscribe("/error", 5, callbackError);
-  ros::Subscriber position_sub = nh.subscribe("/position", 5, callbackPosition);
-  ros::Subscriber joint_error_sub = nh.subscribe("/robotis/present_joint_states", 5, CallBack);
-  ros::Subscriber find_ball_sub = nh.subscribe("/find_ball", 5, findballCallBack);
-  ros::Subscriber imu_sub = nh.subscribe("/robotis/open_cr/imu", 1, callbackImu);
+  //subscribers
+  //ros::Subscriber lectura = nh.subscribe("/robotis/present_joint_states",1,CallBack);
+  //ros::Subscriber error_sub = nh.subscribe("/error", 5, callbackError);
+  //ros::Subscriber position_sub = nh.subscribe("/position", 5, callbackPosition);
+  //ros::Subscriber joint_error_sub = nh.subscribe("/robotis/present_joint_states", 5, CallBack);
+  //ros::Subscriber find_ball_sub = nh.subscribe("/find_ball", 5, findballCallBack);
+  imu_sub = nh.subscribe("/robotis/open_cr/imu", 1, callbackImu);
   
-  std::string line;
+  std::string command;
   
   std::ifstream myfile ("/home/robotis/nayarit_ws/src/op3_leo/data/Pararse.txt");
   if (myfile.is_open()){
@@ -125,9 +125,6 @@ int main(int argc, char **argv)
   vision_case_pub = nh.advertise<std_msgs::Bool>("/vision_case", 1000);
   action_pose_pub = nh.advertise<std_msgs::Int32>("/robotis/action/page_num", 0);
   walk_command_pub = nh.advertise<std_msgs::Int32>("/robotis/walking/command", 0);
-  
-  //subscribers
-  ros::Subscriber lectura = nh.subscribe("/robotis/present_joint_states",1,CallBack);
   
   //services
   set_joint_module_client = nh.serviceClient<robotis_controller_msgs::SetModule>("/robotis/set_present_ctrl_modules");
@@ -206,9 +203,11 @@ int main(int argc, char **argv)
     ros::spinOnce();
     ros::Rate loop_rate(SPIN_RATE);
 
-    goWalk("start");
+    std::string command = "start";
+    goWalk(command);
     ros::Duration(3.0).sleep();
-    goWalk("stop");
+    std::string command = "stop";
+    goWalk(command);
   }
   return 0;
 }
@@ -245,7 +244,7 @@ void goAction(int page) {
   action_pose_pub.publish(action_msg);
 }
 
-void goWalk(string command) {
+void goWalk(std::string& command) {
   setModule("walking_module");
   ROS_INFO("Walking");
 
@@ -309,7 +308,7 @@ bool getWalkingParam() {
     ROS_ERROR("Failed to get walking params");
     return true;
   } else {
-    if (get_param_srv.response.get_param == true) {
+    if (get_param_srv.request.get_param == true) {
       return true;
     }
   }
