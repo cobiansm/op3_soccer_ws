@@ -10,8 +10,8 @@ SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 # Find catkin packages and libraries for catkin and system dependencies
 ################################################################################
 find_package(catkin REQUIRED COMPONENTS
-  roscpp
   robotis_controller_msgs
+  roscpp
   sensor_msgs
   std_msgs
   rospy
@@ -20,7 +20,10 @@ find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
   op3_action_module_msgs
   robotis_math
+  op3_walking_module_msgs
 )
+
+find_package(Eigen3 REQUIRED)
 
 ################################################################################
 # Setup for python modules and scripts
@@ -39,7 +42,6 @@ find_package(catkin REQUIRED COMPONENTS
 ################################################################################
 catkin_package(
   INCLUDE_DIRS
-    include
   CATKIN_DEPENDS
     roscpp
     robotis_controller_msgs
@@ -51,13 +53,14 @@ catkin_package(
     geometry_msgs
     op3_action_module_msgs
     robotis_math
+    op3_walking_module_msgs
+    DEPENDS EIGEN3
 )
 
 ################################################################################
 # Build
 ################################################################################
 include_directories(
-  include
   ${catkin_INCLUDE_DIRS}
   ${EIGEN3_INCLUDE_DIRS}
 )
@@ -84,7 +87,7 @@ install(TARGETS read_write
 )
 
 install(DIRECTORY launch
-  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+        DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
 
 ################################################################################
